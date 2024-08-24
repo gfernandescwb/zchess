@@ -1,0 +1,168 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(8, var(--width));
+  grid-template-rows: repeat(8, var(--height));
+  gap: 0;
+  border: 1px solid var(--color-white);
+}
+
+.square {
+  width: var(--width);
+  height: var(--height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.white {
+  background-color: var(--color-white);
+}
+
+.black {
+  background-color: var(--color-black);
+}
+
+.piece {
+  width: 40px;
+  height: 40px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.boardAndRows {
+  display: flex;
+}
+
+.columnLabels,
+.rowLabels {
+  display: flex;
+}
+
+.columnLabels {
+  justify-content: center;
+}
+
+.rowLabels {
+  flex-direction: column;
+  justify-content: center;
+}
+
+.label1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 75px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--color-white);
+}
+
+.label2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 75px;
+  height: 32px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--color-white);
+}
+
+.emptyCorner {
+  width: 32px;
+  height: 32px;
+}
+
+.pawn-white {
+  background: url("/assets/images/white_pawn.png") no-repeat center center;
+  background-size: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+.rook-white {
+  background: url("/assets/images/white_rook.png") no-repeat center center;
+  background-size: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+.knight-white {
+  background: url("/assets/images/white_knight.png") no-repeat center center;
+  background-size: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+.bishop-white {
+  background: url("/assets/images/white_bishop.png") no-repeat center center;
+  background-size: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+.queen-white {
+  background: url("/assets/images/white_queen.png") no-repeat center center;
+  background-size: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+.king-white {
+  background: url("/assets/images/white_king.png") no-repeat center center;
+  background-size: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+.pawn-black {
+  background: url("/assets/images/black_pawn.png") no-repeat center center;
+  background-size: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+.rook-black {
+  background: url("/assets/images/black_rook.png") no-repeat center center;
+  background-size: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+.knight-black {
+  background: url("/assets/images/black_knight.png") no-repeat center center;
+  background-size: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+.bishop-black {
+  background: url("/assets/images/black_bishop.png") no-repeat center center;
+  background-size: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+.queen-black {
+  background: url("/assets/images/black_queen.png") no-repeat center center;
+  background-size: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+.king-black {
+  background: url("/assets/images/black_king.png") no-repeat center center;
+  background-size: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+.square.selected {
+  outline: 2px solid yellow;
+}
