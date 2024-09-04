@@ -70,7 +70,7 @@ export default function Home() {
       >
         <div className="bg-white w-full lg:h-auto md:w-4/5 lg:w-2/5 p-8 flex flex-col gap-4">
           <div className="text-3xl text-center mb-6 text-[#393939]">
-            Welcome to ZChess!
+            Welcome to ZChess! <small className="opacity-50 italic text-md">v0.1.2</small>
           </div>
           <div className="w-full flex-col">
             <div className="text-xl w-full">Choose your nickname</div>
