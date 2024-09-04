@@ -37,19 +37,19 @@ export default function Rules({ setRules }: RulesProps) {
                 <code>e4</code>
               </li>
               <li>
-                <strong>Capture</strong> - Capture an opponent's piece. Example:{" "}
+                <strong>Capture</strong> - Capture an opponent’s piece. Example:{" "}
                 <code>Bxe5</code>
               </li>
               <li>
-                <strong>King-side Castling</strong> - Castling on the king's
+                <strong>King-side Castling</strong> - Castling on the king’s
                 side. Example: <code>O-O</code>
               </li>
               <li>
-                <strong>Queen-side Castling</strong> - Castling on the queen's
+                <strong>Queen-side Castling</strong> - Castling on the queen’s
                 side. Example: <code>O-O-O</code>
               </li>
               <li>
-                <strong>Check</strong> - Put the opponent's king in check.
+                <strong>Check</strong> - Put the opponent’s king in check.
                 Example: <code>Qe5+</code>
               </li>
               <li>
@@ -79,30 +79,6 @@ export default function Rules({ setRules }: RulesProps) {
                 pawn move or a capture, the game is drawn. Noted as{" "}
                 <code>½-½</code>.
               </li>
-              {/* <li>
-              <strong>Good Move</strong> - Indicates a good move. Example:{" "}
-              <code>!</code>
-            </li>
-            <li>
-              <strong>Brilliant Move</strong> - Indicates a brilliant move.
-              Example: <code>!!</code>
-            </li>
-            <li>
-              <strong>Blunder</strong> - Indicates a blunder. Example:{" "}
-              <code>??</code>
-            </li>
-            <li>
-              <strong>Mistake</strong> - Indicates a mistake. Example:{" "}
-              <code>?</code>
-            </li>
-            <li>
-              <strong>Interesting Move</strong> - Indicates an interesting move,
-              but possibly dubious. Example: <code>!?</code>
-            </li>
-            <li>
-              <strong>Dubious Move</strong> - Indicates a dubious move, but
-              possibly interesting. Example: <code>?!</code>
-            </li> */}
             </ul>
           </div>
           <div className="w-full px-6 pb-6 lg:px-0 lg:pb-0">
