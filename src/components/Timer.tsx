@@ -1,9 +1,8 @@
 interface TimerProps {
   time: number;
-  setTime: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function Timer({ time, setTime }: TimerProps) {
+export default function Timer({ time }: TimerProps) {
   return (
     <div id="timer">
       <div id="ticker" style={{

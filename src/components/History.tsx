@@ -1,11 +1,25 @@
+import React, { useEffect, useRef } from "react";
+
 interface HistoryProps {
   w: string[] | [];
   b: string[] | [];
 }
 
 export default function History({ b, w }: HistoryProps) {
+  const historyRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (historyRef.current) {
+      historyRef.current.scrollTop = historyRef.current.scrollHeight;
+    }
+  }, [w, b]);
+
   return (
-    <div id="history">
+    <div
+      id="history"
+      ref={historyRef}
+      // className="overflow-y-auto max-h-[400px]"
+    >
       {w.map((move, index) => (
         <div
           key={`${index}-move`}

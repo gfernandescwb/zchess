@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Chess } from "chess.js";
-import { FaBook } from "react-icons/fa6";
+import { FaBook, FaArrowTurnUp } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 
 import Prompt from "@ZCHESS/components/Prompt";
@@ -15,7 +15,7 @@ export default function Game() {
   const router = useRouter();
 
   const [rules, setRules] = useState<boolean>(false);
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [flipped, setFlipped] = useState<boolean>(false);
   const [color, setColor] = useState("w");
   const [iaColor, setIaColor] = useState("b");
   const [game, setGame] = useState(new Chess());
@@ -46,6 +46,27 @@ export default function Game() {
       setNickname(usernick);
       setColor(usercolor);
       setIaColor(usercolor === "w" ? "b" : "w");
+
+      if (usercolor === "b") {
+        setFlipped(true);
+        setTimeout(() => {
+          const moves = game
+            .moves({ verbose: true })
+            .filter((m) => m.color !== usercolor);
+
+          if (moves.length > 0) {
+            const randomMove = moves[Math.floor(Math.random() * moves.length)];
+            game.move(randomMove.san);
+
+            setWHistory((prevHistory: string[]) => [
+              ...prevHistory,
+              randomMove.san,
+            ]);
+
+            setGame(new Chess(game.fen()));
+          }
+        }, 500);
+      }
     } else {
       router.push("/");
     }
@@ -53,26 +74,28 @@ export default function Game() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (game.turn() === "w") {
-        if (whiteTime > 0) {
+      const currentTurn = game.turn();
+      const currentTime = currentTurn === "w" ? whiteTime : blackTime;
+
+      if (currentTime > 0) {
+        if (currentTurn === "w") {
           setWhiteTime((prevTime) => prevTime - 1);
-          setTime((prevTime) => prevTime + 0.3333);
         } else {
-          alert("White time ran out. Black wins!");
-          resetGame();
-        }
-      } else if (game.turn() === "b") {
-        if (blackTime > 0) {
           setBlackTime((prevTime) => prevTime - 1);
-        } else {
-          alert("Black time ran out. White wins!");
-          resetGame();
         }
+        setTime((prevTime) => prevTime + 0.3333);
+      } else {
+        alert(
+          `${currentTurn === "w" ? "White" : "Black"} time ran out. ${
+            currentTurn === "w" ? "Black" : "White"
+          } wins!`
+        );
+        resetGame();
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [whiteTime, blackTime, game]);
+  }, [whiteTime, blackTime, game, color]);
 
   const makeAIMove = () => {
     if (game.turn() !== iaColor) {
@@ -93,7 +116,17 @@ export default function Game() {
       const randomMove = moves[Math.floor(Math.random() * moves.length)];
       game.move(randomMove.san);
 
-      setBHistory((prevHistory: string[]) => [...prevHistory, randomMove.san]);
+      if (iaColor === "w") {
+        setWHistory((prevHistory: string[]) => [
+          ...prevHistory,
+          randomMove.san,
+        ]);
+      } else {
+        setBHistory((prevHistory: string[]) => [
+          ...prevHistory,
+          randomMove.san,
+        ]);
+      }
 
       setGame(new Chess(game.fen()));
     }
@@ -111,8 +144,16 @@ export default function Game() {
       if (validMove) {
         const moveResult = game.move(move);
 
+        console.log({
+          move,
+          validMove,
+          moveResult,
+          color,
+          c: moveResult.color,
+        });
+
         if (moveResult.captured) {
-          if (moveResult.color === "w") {
+          if (color === "w") {
             setCapturedWhitePieces([
               ...capturedWhitePieces,
               moveResult.captured,
@@ -125,7 +166,12 @@ export default function Game() {
           }
         }
 
-        setWHistory((prevHistory: string[]) => [...prevHistory, move]);
+        if (color === "w") {
+          setWHistory((prevHistory: string[]) => [...prevHistory, move]);
+        } else {
+          setBHistory((prevHistory: string[]) => [...prevHistory, move]);
+        }
+
         setGame(new Chess(game.fen()));
         setMove("");
 
@@ -173,21 +219,50 @@ export default function Game() {
     <>
       {gameOver.status && (
         <div className="absolute w-full h-full flex items-center justify-center z-50 bg-[#39393932]">
-          <div className="w-[50%] h-[50%] bg-white p-6 border-8 border-[#393939] overflow-y-auto">
-            <h1>{gameOver.message}</h1>
-            <div>
-              <button onClick={() => resetGame()}>Play again</button>
-              <button onClick={() => {}}>Change options</button>
+          <div className="w-[540px] h-[260px] bg-white p-6 border-8 border-[#393939] overflow-y-auto flex flex-col items-center justify-around">
+            <h1 className="text-3xl text-center text-[#393939]">
+              {gameOver.message}
+            </h1>
+            <div className="flex flex-row items-center justify-between w-full gap-2">
+              <button
+                className="bg-[#393939] w-1/2 p-2 rounded-sm text-white"
+                onClick={() => {
+                  resetGame();
+                  setGameOver({ status: false, message: "" });
+                }}
+              >
+                Play again
+              </button>
+              <button
+                className="bg-[#393939] w-1/2 p-2 rounded-sm text-white"
+                onClick={() => {
+                  sessionStorage.removeItem("nickname");
+                  sessionStorage.removeItem("color");
+                  return router.push("/");
+                }}
+              >
+                Change options
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      <div className="fixed top-6 left-6">
+      <div className="fixed top-6 left-6 flex items-center gap-4">
         <FaBook
           color="#fff"
           size={24}
           onClick={() => setRules(true)}
+          className="cursor-pointer"
+        />
+        <FaArrowTurnUp
+          color="#fff"
+          size={24}
+          onClick={() => {
+            sessionStorage.removeItem("nickname");
+            sessionStorage.removeItem("color");
+            return router.push("/");
+          }}
           className="cursor-pointer"
         />
       </div>
@@ -196,12 +271,12 @@ export default function Game() {
 
       <section id="board">
         <div id="boardntimer">
-          <Timer setTime={setTime} time={time} />
+          <Timer time={time} />
           <Board
             nickname={nickname}
             playerColor={color}
             game={game}
-            isFlipped={isFlipped}
+            isFlipped={flipped}
             wcapturedPieces={capturedWhitePieces}
             bcapturedPieces={capturedBlackPieces}
           />

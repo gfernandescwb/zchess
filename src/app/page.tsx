@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
 import { FaBook } from "react-icons/fa6";
+
 import Rules from "@ZCHESS/components/Rules";
 
 export default function Home() {
@@ -17,7 +17,6 @@ export default function Home() {
   useEffect(() => {
     const usernick = sessionStorage.getItem("nickname");
     const usercolor = sessionStorage.getItem("color");
-
     if (usernick && usercolor) {
       router.push(`/game`);
     } else {
@@ -44,10 +43,8 @@ export default function Home() {
       alert("Please choose a color");
       return;
     }
-
     sessionStorage.setItem("nickname", nickname);
     sessionStorage.setItem("color", color);
-
     router.push(`/game`);
   };
 
@@ -57,7 +54,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="fixed top-6 left-6">
+      <div className="fixed top-6 left-6 z-50">
         <FaBook
           color="#fff"
           size={24}
@@ -69,11 +66,12 @@ export default function Home() {
       {rules && <Rules setRules={() => setRules(false)} />}
 
       <div
-        className="w-full h-full relative flex items-center justify-center"
-        style={{ color: "#393939" }}
+        className="w-full h-full relative flex flex-col md:h-screen items-center justify-end md:justify-center text-[#393939]"
       >
-        <div className="bg-white w-[30%] p-8 flex flex-col gap-4">
-          <div className="text-3xl text-center mb-6">Welcome to ZChess!</div>
+        <div className="bg-white w-full lg:h-auto md:w-4/5 lg:w-2/5 p-8 flex flex-col gap-4">
+          <div className="text-3xl text-center mb-6 text-[#393939]">
+            Welcome to ZChess!
+          </div>
           <div className="w-full flex-col">
             <div className="text-xl w-full">Choose your nickname</div>
             <input
@@ -84,12 +82,14 @@ export default function Home() {
               onChange={handleNickname}
             />
           </div>
-          <div className="w-full flex-col">
+          <div className="w-full flex flex-col">
             <div className="text-xl w-full mt-4">Choose your color</div>
-            <ul className="w-full flex items-center justify-evenly">
+            <ul className="w-full flex flex-col md:flex-row items-center justify-evenly">
               <li className="flex justify-center space-x-4 mt-4">
                 <button
-                  className={`bg-white w-[120px] p-2 border-2 border-[#393939] ${color === "w" ? "opacity-100" : "opacity-25"}`}
+                  className={`bg-white w-[120px] p-2 border-2 border-[#393939] ${
+                    color === "w" ? "opacity-100" : "opacity-25"
+                  }`}
                   onClick={() => setColor("w")}
                 >
                   White
@@ -97,7 +97,9 @@ export default function Home() {
               </li>
               <li className="flex justify-center space-x-4 mt-4">
                 <button
-                  className={`bg-[#393939] w-[120px] p-2 text-white ${color === "b" ? "opacity-100" : "opacity-25"}`}
+                  className={`bg-[#393939] w-[120px] p-2 text-white ${
+                    color === "b" ? "opacity-100" : "opacity-25"
+                  }`}
                   onClick={() => setColor("b")}
                 >
                   Black

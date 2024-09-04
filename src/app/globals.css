@@ -16,11 +16,14 @@
   --height: 75px;
 }
 
+html {
+  background-color: #393939;
+}
+
 body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background-color: #393939;
 }
 
@@ -200,7 +203,7 @@ body {
 }
 
 #input_text {
-  width: 77%;
+  width: calc(100% - 95px);
   height: 100%;
   border: none;
   background-color: var(--color-black);
@@ -211,5 +214,39 @@ body {
 
 #label {
   color: var(--color-white);
-  width: 25%;
+  width: auto;
+}
+
+/* Tablet */
+@media screen and (max-width: 840px) {
+  body {
+    flex-direction: column;
+    height: auto !important;
+  }
+
+  #board {
+    height: auto;
+    padding: 20px 0;
+    width: 100%;
+  }
+
+  #prompt {
+    padding: 1rem;
+    width: 100%;
+  }
+
+  #history {
+    max-height: 132px;
+  }
+
+  #input {
+    height: auto;
+  }
+}
+
+/* Tablet */
+@media screen and (max-width: 768px) {
+  #history {
+    max-height: 75px;
+  }
 }

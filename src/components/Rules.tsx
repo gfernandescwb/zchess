@@ -5,12 +5,12 @@ interface RulesProps {
 export default function Rules({ setRules }: RulesProps) {
   return (
     <div className="absolute w-full h-full flex items-center justify-center z-50 bg-[#39393932]">
-      <div className="w-[50%] h-[85%] bg-white p-6 border-8 border-[#393939] overflow-y-auto">
+      <div className="w-full h-full lg:w-[50%] lg:h-[85%] bg-white p-0 lg:p-6 border-8 border-[#393939] overflow-y-auto">
         <div
           className="w-full h-full flex flex-col items-end justify-between overflow-hidden overflow-y-auto"
           style={{ color: "#393939" }}
         >
-          <div className="w-full flex flex-col gap-4">
+          <div className="w-full flex flex-col gap-4 p-6 lg:p-0">
             <h1 className="text-2xl font-[600] w-full">Rules</h1>
             <ul>
               <li>
@@ -105,12 +105,14 @@ export default function Rules({ setRules }: RulesProps) {
             </li> */}
             </ul>
           </div>
+          <div className="w-full px-6 pb-6 lg:px-0 lg:pb-0">
           <button
-            className="mt-4 bg-[#393939] w-[120px] p-2 text-white"
+            className="mt-4 bg-[#393939] w-full lg:w-[120px] p-2 text-white"
             onClick={() => setRules(false)}
           >
             Close
           </button>
+          </div>
         </div>
       </div>
     </div>

@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 interface PromptProps {
   onMove: (move: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (move: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -5,10 +7,18 @@ interface PromptProps {
 }
 
 export default function Prompt({ move, onMove, onSubmit }: PromptProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
   return (
     <div id="input">
       <label htmlFor="prompt" id="label">
-        Enter your move:
+        Your move:
       </label>
       <input
         name="prompt"
@@ -18,6 +28,7 @@ export default function Prompt({ move, onMove, onSubmit }: PromptProps) {
         value={move}
         onChange={(e) => onMove(e)}
         onKeyDown={(e) => onSubmit(e)}
+        ref={inputRef}
       />
     </div>
   );

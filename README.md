@@ -34,3 +34,26 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+(add-to-list 'load-path
+   "/home/hal9000/.opam/default/share/emacs/site-lisp")
+     (require 'ocp-indent)
+
+(let ((opam-share (ignore-errors (car (process-lines "opam" "var"
+   "share")))))
+      (when (and opam-share (file-directory-p opam-share))
+       ;; Register Merlin
+       (add-to-list 'load-path (expand-file-name "emacs/site-lisp"
+   opam-share))
+       (autoload 'merlin-mode "merlin" nil t nil)
+       ;; Automatically start it in OCaml buffers
+       (add-hook 'tuareg-mode-hook 'merlin-mode t)
+       (add-hook 'caml-mode-hook 'merlin-mode t)
+       ;; Use opam switch to lookup ocamlmerlin binary
+       (setq merlin-command 'opam)
+       ;; To easily change opam switches within a given Emacs session, you
+   can
+       ;; install the minor mode
+   https://github.com/ProofGeneral/opam-switch-mode
+       ;; and use one of its "OPSW" menus.
+       ))
