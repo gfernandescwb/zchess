@@ -41,29 +41,29 @@ export default function Game() {
   useEffect(() => {
     const usernick = sessionStorage.getItem("nickname");
     const usercolor = sessionStorage.getItem("color");
-  
+
     if (usernick && usercolor) {
       setLoading(false);
       setNickname(usernick);
       setColor(usercolor);
       setIaColor(usercolor === "w" ? "b" : "w");
-  
+
       if (usercolor === "b" && !hasIaMoved) {
         setFlipped(true);
         setTimeout(() => {
           const moves = game
             .moves({ verbose: true })
             .filter((m) => m.color !== usercolor);
-  
+
           if (moves.length > 0) {
             const randomMove = moves[Math.floor(Math.random() * moves.length)];
             game.move(randomMove.san);
-  
+
             setWHistory((prevHistory: string[]) => [
               ...prevHistory,
               randomMove.san,
             ]);
-  
+
             setGame(new Chess(game.fen()));
           }
         }, 500);
@@ -116,7 +116,15 @@ export default function Game() {
 
     if (moves.length > 0) {
       const randomMove = moves[Math.floor(Math.random() * moves.length)];
-      game.move(randomMove.san);
+      const moveResult = game.move(randomMove.san);
+
+      if (moveResult.captured) {
+        if (iaColor === "w") {
+          setCapturedWhitePieces([...capturedWhitePieces, moveResult.captured]);
+        } else {
+          setCapturedBlackPieces([...capturedBlackPieces, moveResult.captured]);
+        }
+      }
 
       if (iaColor === "w") {
         setWHistory((prevHistory: string[]) => [
@@ -145,14 +153,6 @@ export default function Game() {
 
       if (validMove) {
         const moveResult = game.move(move);
-
-        console.log({
-          move,
-          validMove,
-          moveResult,
-          color,
-          c: moveResult.color,
-        });
 
         if (moveResult.captured) {
           if (color === "w") {
